@@ -53,12 +53,12 @@ function Navbar() {
             <div className="flex-shrink-0 my-auto">
               <div className="text-2xl font-bold ">
                 <TopNavLink href="/">
-                  Business Reviews<span>!</span>
+                  UrbanScout<span>!</span>
                 </TopNavLink>
               </div>
             </div>
             <div className="hidden sm:flex sm:ml-10 sm:space-x-8 my-auto">
-              <TopNavLink href="/">Reviews</TopNavLink>
+              <TopNavLink href="/businesses">Businesses</TopNavLink>
             </div>
           </div>
 
@@ -96,7 +96,7 @@ function Navbar() {
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <div className="flex flex-col justify-center items-center gap-2">
             <TopNavLink href="/">Home</TopNavLink>
-            <TopNavLink href="/">Reviews</TopNavLink>
+            <TopNavLink href="/businesses">Businesses</TopNavLink>
           </div>
         </div>
       </div>

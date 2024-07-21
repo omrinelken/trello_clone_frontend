@@ -57,7 +57,7 @@ const HomePage: React.FC = () => {
             Your go-to platform for exploring and reviewing local businesses
           </p>
           <Button size="lg" asChild>
-            <Link to="/get-started">Get Started</Link>
+            <Link to="/auth/login">Get Started</Link>
           </Button>
         </div>
       </section>
@@ -188,7 +188,7 @@ const HomePage: React.FC = () => {
           businesses.
         </p>
         <Button size="lg" asChild>
-          <Link to="/sign-up">Sign Up Now</Link>
+          <Link to="/auth/register">Sign Up Now</Link>
         </Button>
       </section>
     </div>
