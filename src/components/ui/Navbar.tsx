@@ -20,7 +20,7 @@ function TopNavLink(props: ITopNavLink) {
     <NavLink
       className={({ isActive }) =>
         isActive
-          ? "text-primary border-b-2 border-transparent hover:border-primary transition-all duration-300"
+          ? "text-primary border-b-2 border-primary hover:border-primary transition-all duration-300"
           : "border-b-2 border-transparent hover:border-primary transition-all duration-300"
       }
       to={href}

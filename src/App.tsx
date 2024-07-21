@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 import MainLayout from "./components/ui/MainLayout";
 import BusinessesPage from "./pages/BusinessesPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import HomePage from "./pages/HomePage";
 
 function AuthorizeAccess({ children }: { children: React.ReactNode }) {
   const { loggedInUser } = useAuth();
@@ -32,7 +33,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
-        <Route index element={<BusinessesPage />} />
+        <Route index element={<HomePage />} />
+        <Route path="/businesses" element={<BusinessesPage />} />
       </Route>
 
       <Route

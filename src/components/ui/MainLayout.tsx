@@ -5,7 +5,7 @@ function MainLayout() {
   return (
     <div className=" ">
       <Navbar />
-      <div className=" mx-5 mt-4 md:mx-10 lg:mx-14 xl:mx-20">
+      <div className=" mx-5 mt-2 md:mx-10 lg:mx-14 xl:mx-20">
         <Outlet />
       </div>
     </div>
