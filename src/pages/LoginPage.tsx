@@ -24,8 +24,7 @@ function LoginPage() {
     const form = new FormData(ev.currentTarget);
     const username = form.get("username") as string;
     const password = form.get("password") as string;
-    // login({ username, password });
-    console.log(username, password);
+    login({ username, password });
   }
 
   return (

@@ -54,8 +54,7 @@ function Register() {
       password: newPassword,
       email,
     };
-    // register(userToAdd);
-    console.log(userToAdd);
+    register(userToAdd);
 
     ev.currentTarget.reset();
     setPassword("");

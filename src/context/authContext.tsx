@@ -72,12 +72,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       setLoading(true);
       const response = await api.post("/auth/login", userData);
-      setToken(response.data.token);
-      toast({
-        title: "Logged in succesfully",
-        description: `Welcome to Taskly`,
-        variant: "success",
-      });
+      console.log(response.data);
+
+      setToken(response.data);
+      navigate("/");
     } catch (error) {
       toast({
         title: "Unauthorized access!",
@@ -85,6 +83,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           "Either the username or the password you have entered are incorrect! Try again",
         variant: "error",
       });
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -94,11 +93,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       setLoading(true);
       await api.post("/auth/register", userData);
-      toast({
-        title: "Registered succesfully",
-        description: `Thank you for registering!`,
-        variant: "success",
-      });
+
       navigate("/auth/login");
     } catch (error) {
       toast({
