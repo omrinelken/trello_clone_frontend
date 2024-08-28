@@ -1,124 +1,43 @@
-import { useToast } from "@/components/ui/use-toast";
-import api from "@/lib/api";
-import { useLocalStorage } from "@uidotdev/usehooks";
-import { createContext, useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { LoginUser, RegisterUser, User } from "../types/userTypes";
-
-const AuthContext = createContext<AuthContextType | null>(null);
+import React, { createContext, useState, useContext } from 'react';
 
 interface AuthContextType {
-  loggedInUser: User | null | undefined;
-  login: (user: LoginUser) => void;
-  register: (user: RegisterUser) => void;
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  loading: boolean;
 }
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>(
-    undefined
-  );
-  const [loading, setLoading] = useState(false);
-  const [token, setToken] = useLocalStorage("jwt-taskify", null);
-  const navigate = useNavigate();
-  const { toast } = useToast();
+interface User {
+  id: string;
+  email: string;
+  name: string;
+}
 
-  useEffect(() => {
-    if (!token) {
-      setLoggedInUser(null);
-      return;
-    }
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-    async function fetchUser() {
-      try {
-        const response = await api.get("/auth/user");
-        setLoggedInUser(response.data);
-      } catch (error: any) {
-        if (error.response?.status === 401) {
-          toast({
-            title: "Invalid session!",
-            description: "Your session is invalid, logging you out...",
-            variant: "error",
-          });
-          logout();
-        } else if (error.response?.status === 404) {
-          toast({
-            title: "Invalid session!",
-            description: "Your session is invalid, logging you out...",
-            variant: "error",
-          });
-          logout();
-        } else {
-          toast({
-            title: "Oops! something went wrong",
-            description: error.message,
-            variant: "error",
-          });
-        }
-      }
-    }
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
 
-    fetchUser();
-  }, [token]);
+  const login = async (email: string, password: string) => {
+    // Implement your login logic here
+    // For now, we'll just set a mock user
+    setUser({ id: '1', email, name: 'John Doe' });
+  };
 
-  function logout() {
-    setToken(null);
-    setLoggedInUser(null);
-    navigate("/");
-  }
-
-  async function login(userData: LoginUser) {
-    try {
-      setLoading(true);
-      const response = await api.post("/auth/login", userData);
-      console.log(response.data);
-
-      setToken(response.data);
-      navigate("/");
-    } catch (error) {
-      toast({
-        title: "Unauthorized access!",
-        description:
-          "Either the username or the password you have entered are incorrect! Try again",
-        variant: "error",
-      });
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function register(userData: RegisterUser) {
-    try {
-      setLoading(true);
-      await api.post("/auth/register", userData);
-
-      navigate("/auth/login");
-    } catch (error) {
-      toast({
-        title: "User already exists",
-        description: "The user you are trying to create already exists! ",
-        variant: "error",
-      });
-    } finally {
-      setLoading(false);
-    }
-  }
+  const logout = () => {
+    setUser(null);
+  };
 
   return (
-    <AuthContext.Provider
-      value={{ loggedInUser, login, register, logout, loading }}
-    >
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export function useAuth() {
+export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within a UserProvider");
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}
+};
